@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -12,6 +13,18 @@ import { environment } from '../environments/environment';
   declarations: [AppComponent, NxWelcomeComponent],
   imports: [
     BrowserModule,
+    RouterModule.forRoot([
+      // {
+      //   path: 'books',
+      //   loadChildren: () =>
+      //     import('@book-co/books-page').then((m) => m.BooksPageModule),
+      // },
+      // {
+      //   path: '',
+      //   pathMatch: 'full',
+      //   redirectTo: 'books',
+      // },
+    ]),
     StoreModule.forRoot(
       {},
       {

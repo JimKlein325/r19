@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/project-dashboard",
+  "sourceRoot": "libs/project-dashboard/src",
+  "prefix": "r19",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/project-dashboard"],
+      "options": {
+        "jestConfig": "libs/project-dashboard/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/project-dashboard/src/**/*.ts",
+          "libs/project-dashboard/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
