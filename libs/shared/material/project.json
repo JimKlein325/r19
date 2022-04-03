@@ -1,0 +1,26 @@
+{
+  "projectType": "library",
+  "root": "libs/shared/material",
+  "sourceRoot": "libs/shared/material/src",
+  "prefix": "r19",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/shared/material"],
+      "options": {
+        "jestConfig": "libs/shared/material/jest.config.js",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/shared/material/src/**/*.ts",
+          "libs/shared/material/src/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

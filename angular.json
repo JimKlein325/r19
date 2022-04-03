@@ -3,6 +3,7 @@
   "projects": {
     "dashboard": "apps/dashboard",
     "dashboard-e2e": "apps/dashboard-e2e",
-    "project-dashboard": "libs/project-dashboard"
+    "project-dashboard": "libs/project-dashboard",
+    "shared-material": "libs/shared/material"
   }
 }
