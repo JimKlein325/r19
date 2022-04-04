@@ -17,7 +17,8 @@
     "paths": {
       "@r19/project-dashboard": ["libs/project-dashboard/src/index.ts"],
       "@r19/shared/material": ["libs/shared/material/src/index.ts"],
-      "@r19/shared/models": ["libs/shared/models/src/index.ts"]
+      "@r19/shared/models": ["libs/shared/models/src/index.ts"],
+      "@r19/shared/state": ["libs/shared/state/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
