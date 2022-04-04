@@ -1,7 +1,7 @@
 import { Action, createReducer, createSelector, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { Projects } from './projects.model';
-import {ProjectSummary} from '../../../models/src/lib/projects'
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import { ProjectSummary } from '../../../models/src/lib/project-summaries';
 import * as ProjectsActions from './projects.actions';
 
 export const projectsesFeatureKey = 'projectses';

@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
-import {ProjectSummary} from '../../../models/src/lib/projects'
+// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
+import {ProjectSummary} from '../../../models/src/lib/project-summaries'
 
 export const loadProjects = createAction(
   '[Dashboard API] Load Projects', 

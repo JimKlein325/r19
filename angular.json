@@ -6,6 +6,7 @@
     "project-dashboard": "libs/project-dashboard",
     "shared-material": "libs/shared/material",
     "shared-models": "libs/shared/models",
+    "shared-services": "libs/shared/services",
     "shared-state": "libs/shared/state"
   }
 }
