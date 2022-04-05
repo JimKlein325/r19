@@ -13,37 +13,32 @@ import { ProjectDashboardModule } from '@r19/project-dashboard';
 import { SharedMaterialModule } from '@r19/shared/material';
 
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot([
-      // {
-      //   path: 'books',
-      //   loadChildren: () =>
-      //     import('@book-co/books-page').then((m) => m.BooksPageModule),
-      // },
-      // {
-      //   path: '',
-      //   pathMatch: 'full',
-      //   redirectTo: 'books',
-      // },
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('@r19/project-dashboard').then((m) => m.ProjectDashboardModule),
+      },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'books',
+      },
     ]),
     StoreModule.forRoot(
-      {},
-      {
-        metaReducers: !environment.production ? [] : [],
-        runtimeChecks: {
-          strictActionImmutability: true,
-          strictStateImmutability: true,
-        },
-      }
+      {}
     ),
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     BrowserAnimationsModule,
     ProjectDashboardModule,
-    SharedMaterialModule
+    SharedMaterialModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

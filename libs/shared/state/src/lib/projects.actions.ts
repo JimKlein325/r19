@@ -8,6 +8,11 @@ export const loadProjects = createAction(
   props<{ projects: ProjectSummary[] }>()
 );
 
+export const loadProjectsFailure = createAction(
+  '[Dashboard API] Projects Loaded Failure',
+  props<{ error: Error }>()
+);
+
 export const addProject = createAction(
   '[Dashboard API] Add Project',
   props<{ project: ProjectSummary }>()

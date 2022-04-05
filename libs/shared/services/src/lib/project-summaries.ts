@@ -1,6 +1,5 @@
-{
-    "projects": 
-
+import {ProjectSummary} from '../../../models/src/lib/project-summaries'
+export const projectSummaries: ProjectSummary[] = 
 [{
     "title": "Tagtune",
     "division": "Accounting",
@@ -242,5 +241,5 @@
     "created": "07/20/2015",
     "modified": "10/01/2015"
   }]
-}
+
   

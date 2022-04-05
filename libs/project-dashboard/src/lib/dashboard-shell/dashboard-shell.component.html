@@ -3,7 +3,13 @@
     <mat-card-title>Shiba Inu</mat-card-title>
     <mat-card-content>
       <p>This card has divider and indeterminate progress as footer</p>
-      <p>7</p>
-    </mat-card-content>
+      <p></p>
+      <ng-container *ngIf="budgetTotal$ | async as books">
+        {{books}}
+    </ng-container>
+    <ng-container *ngIf="statusSummary$ | async as books">
+        {{books | json}}
+    </ng-container>
+</mat-card-content>
     <mat-divider inset></mat-divider>
   </mat-card>

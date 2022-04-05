@@ -8,18 +8,21 @@ import {
 } from '@ngrx/store';
 import * as fromDashboard from './dashboard.reducer';
 import * as fromProjects from './projects.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { ProjectEffects } from './project.effects';
+import { ProjectSummary } from 'libs/shared/models/src/lib/project-summaries';
 
-export const FEATURE_KEY = 'dashboard';
+export const FEATURE_KEY = 'project-dashboard';
 
 /**
  * State Shape
  **/
 export interface State {
- projctsSummaries: fromBooks.State;
+ projectSummaries: fromProjects.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
-  dashboard: fromProjects.reducer,
+    projectSummaries: fromProjects.reducer,
 };
 
 export const metaReducers: MetaReducer<State>[] = [];
@@ -28,26 +31,28 @@ export const metaReducers: MetaReducer<State>[] = [];
  * Module
  **/
 @NgModule({
-  imports: [StoreModule.forFeature(FEATURE_KEY, reducers, { metaReducers }), StoreModule.forFeature(fromProjects.projectsesFeatureKey, fromProjects.reducer)],
+  imports: [StoreModule.forFeature(FEATURE_KEY, reducers, { metaReducers }), EffectsModule.forFeature([ProjectEffects])],
 })
 export class SharedStateModule {}
 
 /**
  * Feature Selector
  **/
-export const selectSharedBooksState = createFeatureSelector<State>(FEATURE_KEY);
+export const selectSharedState = createFeatureSelector<State>(FEATURE_KEY);
 
 /**
  * Books Selectors
  */
-// export const selectBooksState = createSelector(
-//   selectSharedBooksState,
-//   (state: State) => state.books
-// );
-// export const selectAllBooks = createSelector(
-//   selectBooksState,
-//   fromBooks.selectAll
-// );
+export const selectDashboardState = createSelector(
+  selectSharedState,
+  (state: State) => {
+      return state.projectSummaries
+    }
+);
+export const selectAllProjectss = createSelector(
+    selectDashboardState,
+  fromProjects.selectAll
+);
 // export const selectActiveBook = createSelector(
 //   selectBooksState,
 //   fromBooks.selectActiveBook
@@ -56,3 +61,11 @@ export const selectSharedBooksState = createFeatureSelector<State>(FEATURE_KEY);
 //   selectBooksState,
 //   fromBooks.selectEarningsTotals
 // );
+export const selectProjectBudgetTotals = createSelector(
+    selectDashboardState,
+    fromProjects.selectBudgetTotals
+);
+export const selectProjectStatusSummary = createSelector(
+    selectDashboardState,
+    fromProjects.selectProjectStatusSummary
+);

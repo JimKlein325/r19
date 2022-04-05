@@ -1,14 +1,16 @@
 import { Action, createReducer, createSelector, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { ProjectSummary } from '../../../models/src/lib/project-summaries';
+import { calculateBudgetTotal, ProjectSummary, calculateStatusSummary } from '../../../models/src/lib/project-summaries';
 import * as ProjectsActions from './projects.actions';
 
-export const projectsesFeatureKey = 'projectses';
+export const projectsesFeatureKey = 'dashboard';
 
 export interface State extends EntityState<ProjectSummary> { activeProjectId: string | null;}
 
-export const adapter: EntityAdapter<ProjectSummary> = createEntityAdapter<ProjectSummary>();
+export const adapter: EntityAdapter<ProjectSummary> = createEntityAdapter<ProjectSummary>(
+  { selectId: (summary) => summary.title }
+);
 
 export const initialState: State = adapter.getInitialState({
   activeProjectId: null
@@ -56,12 +58,20 @@ export const {
 } = adapter.getSelectors();
 
 export const selectActiveProjectId = (state: State) => state.activeProjectId;
-export const selectActiveBook = createSelector(
+export const selectActiveProject = createSelector(
   selectEntities,
   selectActiveProjectId,
-  (booksEntities, activeProjectId) => {
-    if (activeProjectId) return booksEntities[activeProjectId] ?? null;
-
+  (projectsEntities, activeProjectId) => {
+    if (activeProjectId) return projectsEntities[activeProjectId] ?? null;
     return null;
   }
+);
+
+export const selectBudgetTotals = createSelector(
+  selectAll,
+  calculateBudgetTotal
+);
+export const selectProjectStatusSummary = createSelector(
+  selectAll,
+  calculateStatusSummary
 );
