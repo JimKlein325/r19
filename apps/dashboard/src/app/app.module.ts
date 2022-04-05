@@ -14,6 +14,7 @@ import { SharedMaterialModule } from '@r19/shared/material';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent],
   imports: [
@@ -38,7 +39,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     ProjectDashboardModule,
     SharedMaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent],

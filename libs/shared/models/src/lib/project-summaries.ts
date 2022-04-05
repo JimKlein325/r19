@@ -7,7 +7,21 @@ export interface ProjectSummary {
     created: string;
     modified: string | null;
   }
+
+  export type ProjectSummaryKey = keyof ProjectSummary;
   
+  export type ProjectSummaryHearders = Record<ProjectSummaryKey, string>;
+
+  export const projectSummaryColumnHeaders: ProjectSummaryHearders = {
+    "title": "Title",
+    "division": "Division",
+    "project_owner": "Project Owner",
+    "budget": "Budget",
+    "status": "Status",
+    "created": "Created",
+    "modified": "Modified"
+  }
+
   export type Division =
     | 'Accounting'
     | 'Administration'
@@ -25,7 +39,7 @@ export interface ProjectSummary {
     total: number
   }
 
-export type StatusReport = StatusReportList & Total
+  export type StatusReport = StatusReportList & Total
   
   export const statusOptions: StatusOptions  = {
     archived: 'Archived', 
@@ -39,9 +53,7 @@ export type StatusReport = StatusReportList & Total
       return total + parseInt(`${project.budget}`, 10) || 0;
     }, 0);
   }
-  const incrementTotal = (target: number) : number  => {
-    return target++
-  }
+
   export function calculateStatusSummary(projects: ProjectSummary[]): StatusReport {
     return projects.reduce((acc, project) => {
       const newTotal = acc.total+1

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import {DashboardPageActions} from '@r19/shared/state';
-import { Observable } from 'rxjs';
-import { selectProjectBudgetTotals, selectProjectStatusSummary } from '@r19/shared/state'
+import { filter, map, Observable } from 'rxjs';
+import { selectAllProjects, selectProjectBudgetTotals, selectProjectStatusSummary } from '@r19/shared/state'
 import {ProjectSummary, StatusReport} from '@r19/shared/models'
 
 @Component({
@@ -14,6 +14,7 @@ import {ProjectSummary, StatusReport} from '@r19/shared/models'
 export class DashboardShellComponent implements OnInit {
   budgetTotal$: Observable<number>;
   statusSummary$: Observable<StatusReport>;
+  projectSummaries$: Observable<ProjectSummary[]> = this.store.select(selectAllProjects).pipe(map(projects => projects?? []));
 
   constructor(private store: Store) {
     this.budgetTotal$ = store.select(selectProjectBudgetTotals);

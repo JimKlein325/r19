@@ -49,7 +49,7 @@ export const selectDashboardState = createSelector(
       return state.projectSummaries
     }
 );
-export const selectAllProjectss = createSelector(
+export const selectAllProjects = createSelector(
     selectDashboardState,
   fromProjects.selectAll
 );
