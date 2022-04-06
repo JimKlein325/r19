@@ -69,3 +69,12 @@ export const selectProjectStatusSummary = createSelector(
     selectDashboardState,
     fromProjects.selectProjectStatusSummary
 );
+
+export const selectProjectManagers = createSelector(
+    selectAllProjects,
+    (summaries) => {
+        const allPOs = summaries.map(summary => summary.project_owner);
+        const pOSet = new Set(allPOs);
+        return Array.from(pOSet);
+    }
+);

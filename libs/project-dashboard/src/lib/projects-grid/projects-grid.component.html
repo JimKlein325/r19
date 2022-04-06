@@ -1,23 +1,66 @@
 <div class="mat-elevation-z8">
     <ng-container *ngIf="projects">
         <table mat-table [dataSource]="projects" matSort>
-          <ng-container *ngFor="let column of columns as ProjectSummaryKey" [matColumnDef]="column">
+          <ng-container *ngFor="let column of columns as ProjectSummaryKey" [matColumnDef]="column" [ngSwitch]="column">
             <th mat-header-cell *matHeaderCellDef>
               <div mat-sort-header>{{ getHead(column) }}</div>
-              <!-- <div class="filter" *ngIf="columnFiltersTurnedOn">
-                <mat-form-field appearance="outline">
-                  <mat-label>Filter By {{ column | titlecase }}</mat-label>
-                  <input matInput [formControl]="form.get(column)" />
-                </mat-form-field>
+              <div class="filter" >
+                <div *ngSwitchCase="'title'">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Filter Title</mat-label>
+                        <input matInput formControlName="title"/>
+                      </mat-form-field>
+                </div>
+                <div *ngSwitchCase="'division'">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Filter Division</mat-label>
+                        <mat-select formControlName="division">
+                        <mat-option value="null"></mat-option>
+                        <mat-option *ngFor="let division of divisions"  [value]="division">{{division}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div *ngSwitchCase="'project_owner'">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Filter</mat-label>
+                        <mat-select formControlName="project_owner">
+                        <mat-option value="null"></mat-option>
+                        <mat-option *ngFor="let projectOwner of projectOwners"  [value]="projectOwner">{{projectOwner}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div *ngSwitchCase="'budget'">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Filter</mat-label>
+                      <mat-select>
+                        <mat-option value="one">First option</mat-option>
+                        <mat-option value="two">Second option</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                </div>
+                <div *ngSwitchCase="'status'">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Filter</mat-label>
+                        <mat-select formControlName="status">
+                        <mat-option value="null"></mat-option>
+                        <mat-option *ngFor="let status of statuses"  [value]="status">{{statusOptions[status]}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
 
-                
-              </div> -->
+              </div>
             </th>
-            <td mat-cell *matCellDef="let project">{{ project[column] }}</td>
+            <td mat-cell *matCellDef="let project">{{ project[column] | titlecase }}</td>
           </ng-container>
-        
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>
+            </th>
+            <mat-cell *cdkCellDef="let row" >
+                 <button md-raised-button >Details</button> 
+            </mat-cell>
+        </ng-container> 
           <tr mat-header-row *matHeaderRowDef="columns"></tr>
-          <tr mat-row *matRowDef="let row; columns: columns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
         </table>
     </ng-container>
 </div>

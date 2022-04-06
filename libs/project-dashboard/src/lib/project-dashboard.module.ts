@@ -7,6 +7,8 @@ import { SharedMaterialModule } from '@r19/shared/material';
 import { SharedStateModule } from '@r19/shared/state';
 import { ProjectsGridComponent } from './projects-grid/projects-grid.component';
 import { MatTableModule } from '@angular/material/table';
+import { ProjectsTableComponent } from './projects-table/projects-table.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -14,6 +16,7 @@ import { MatTableModule } from '@angular/material/table';
     SharedMaterialModule,
     SharedStateModule,
     MatTableModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       /* {path: '', pathMatch: 'full', component: InsertYourComponentHere} */
     ]),
@@ -21,7 +24,8 @@ import { MatTableModule } from '@angular/material/table';
   declarations: [
     DashboardShellComponent,
     BudgetSummaryComponent,
-    ProjectsGridComponent
+    ProjectsGridComponent,
+    ProjectsTableComponent
   ],
   exports:  [
     DashboardShellComponent,

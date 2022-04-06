@@ -1,6 +1,7 @@
+import { TEXT_COLUMN_OPTIONS } from '@angular/cdk/table';
 import { Component, OnInit, ChangeDetectionStrategy, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroup } from '@angular/forms';
-import { ProjectSummary, projectSummaryColumnHeaders, ProjectSummaryHearders, ProjectSummaryKey } from '@r19/shared/models';
+import { ProjectSummary, projectSummaryColumnHeaders, ProjectSummaryControlValues, projectSummaryControlInitialValues, ProjectSummaryHearders, ProjectSummaryKey, Division, statusOptions, Status } from '@r19/shared/models';
 import { ReplaySubject, Subject } from 'rxjs';
 
 @Component({
@@ -13,25 +14,39 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
 
   @Input() projects: ProjectSummary[] | null = [];
   @Input() columnFiltersTurnedOn = false;
+  @Input() projectOwners: string[] | null = [];
   private _columnFiltersTurnedOn$ = new ReplaySubject<boolean>(1);
   columns: string[] = Object.keys(projectSummaryColumnHeaders);
-  projectSummaryColumnHeaders =projectSummaryColumnHeaders;
+  displayColumns: string[] = this.columns.concat(['actions']);
+  statuses: Status[] = Object.keys(statusOptions) as Status[];
+  divisions:  Division[] = [ 'Accounting', 
+  'Administration', 
+  'Marketing',
+  'Production' , 
+  'Sales']
+  statusOptions = statusOptions;
+  projectSummaryColumnHeaders = projectSummaryColumnHeaders;
+
   private _destroying = new Subject<void>();
-  form: FormGroup = new FormGroup({});
+  
+  form: FormGroup = new FormGroup(
+    this.columns.reduce(
+      (acc, columnName) => {
+        console.log('acc', acc)
+        const key = columnName as unknown as ProjectSummaryKey
+        const controlValue = projectSummaryControlInitialValues[key]
+        return ({ ...acc, [columnName]: new FormControl(controlValue) })},
+      {}
+    )
+  );
 
   getHead(s: string) {
     const t = s as ProjectSummaryKey
     return projectSummaryColumnHeaders[t]
   }
-  
-  writeValue(v: (keyof ProjectSummary)[]) {
-    // create your own implementation here
-    this.form = new FormGroup(
-      this.columns.reduce(
-        (acc, columnName) => ({ ...acc, [columnName]: new FormControl('') }),
-        {}
-      )
-    );
+
+  writeValue(v: ProjectSummaryControlValues) {
+    this.form.setValue(v);
   }
 
   registerOnChange(fn: any) {

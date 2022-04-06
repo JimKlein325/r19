@@ -9,6 +9,10 @@
     <ng-container *ngIf="statusSummary$ | async as books">
         {{books | json}}
     </ng-container>
-    <r19-projects-grid [projects]="projectSummaries$! | async"></r19-projects-grid>
+    <r19-projects-table></r19-projects-table>
+    <r19-projects-grid 
+    [projects]="projectSummaries$! | async" 
+    [projectOwners]="projectOwners$! | async"
+    ></r19-projects-grid>
     </mat-card-content>
 </mat-card>

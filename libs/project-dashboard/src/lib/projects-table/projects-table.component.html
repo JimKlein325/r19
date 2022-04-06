@@ -1,0 +1,11 @@
+<form [formGroup]="form" class="filter-checkbox">
+    <mat-checkbox formControlName="columnFilters" class="column-filter">
+      Enable Per-Column Filters
+    </mat-checkbox>
+</form>
+<button mat-raised-button>Add Project</button>
+<button mat-raised-button class="export-button" [matMenuTriggerFor]="menu">Export</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>Excel</button>
+  <button mat-menu-item>PDF</button>
+</mat-menu>
