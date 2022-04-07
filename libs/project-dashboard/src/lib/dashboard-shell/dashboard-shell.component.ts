@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import {DashboardPageActions} from '@r19/shared/state';
-import { filter, map, Observable } from 'rxjs';
-import { selectAllProjects, selectProjectBudgetTotals, selectProjectStatusSummary, selectProjectManagers } from '@r19/shared/state'
+import { map, Observable, shareReplay, startWith, switchMap } from 'rxjs';
+import { selectAllProjects, selectProjectBudgetTotals, selectProjectStatusSummary, selectProjectOwners } from '@r19/shared/state'
 import {ProjectSummary, StatusReport} from '@r19/shared/models'
+import { FormControl } from '@angular/forms';
+import { projectColumnFilter } from '../dashboard.utils';
 
 @Component({
   selector: 'r19-dashboard-shell',
@@ -15,16 +17,40 @@ export class DashboardShellComponent implements OnInit {
   budgetTotal$: Observable<number>;
   statusSummary$: Observable<StatusReport>;
   projectSummaries$: Observable<ProjectSummary[]> = this.store.select(selectAllProjects).pipe(map(projects => projects?? []));
-  projectOwners$: Observable<string[]> = this.store.select(selectProjectManagers)
-  
+  projectOwners$: Observable<string[]> = this.store.select(selectProjectOwners)
+
+  tableForm = new FormControl({ columnFilters: false});
+  columnFilterForm = new FormControl ({
+    title: '',
+    division: '',
+    project_owner: '',
+    budget: '',
+    status: '',
+    created: '',
+    modified: ''
+  })
+
+  filteredProjects$!: Observable<ProjectSummary[]>;
+
   constructor(private store: Store) {
     this.budgetTotal$ = store.select(selectProjectBudgetTotals);
     this.statusSummary$ = store.select(selectProjectStatusSummary);
-  //   this.total$ = store.select(selectBooksEarningsTotals);
+    this.store.dispatch(DashboardPageActions.enter());
   }
 
   ngOnInit() {
-    this.store.dispatch(DashboardPageActions.enter());
+
+    this.filteredProjects$ = this.columnFilterForm.valueChanges.pipe(
+      startWith(this.columnFilterForm.value),
+      switchMap(columnFilters => {
+        return this.projectSummaries$.pipe(
+          map( allProjects => allProjects.filter(project => projectColumnFilter(project, columnFilters)))
+        )
+      }
+      ),
+      shareReplay(1)
+    );
+
   }
 
 

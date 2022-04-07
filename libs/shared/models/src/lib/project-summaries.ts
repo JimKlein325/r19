@@ -14,6 +14,8 @@ export interface ProjectSummary {
 
   export type ProjectSummaryControlValues = Record<ProjectSummaryKey, string | boolean | Date | null>
 
+  export const  projectSummaryKeys: (keyof ProjectSummary)[] =  [ 'title', 'division', 'project_owner', 'budget', 'status', 'created', 'modified'];
+
   export const projectSummaryColumnHeaders: ProjectSummaryHearders = {
     "title": "Title",
     "division": "Division",
@@ -54,10 +56,10 @@ export interface ProjectSummary {
   export type StatusReport = StatusReportList & Total
   
   export const statusOptions: StatusOptions  = {
-    archived: 'Archived', 
-    delivered: 'Delivered', 
-    new: 'New', 
-    working: 'Working'
+    archived: 'archived', 
+    delivered: 'delivered', 
+    new: 'new', 
+    working: 'working'
   }
 
   export interface ProjectsTableFormValue {

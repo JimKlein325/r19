@@ -7,7 +7,8 @@ import {
 import {
   ControlValueAccessor,
   FormGroup,
-  FormControl
+  FormControl,
+  NG_VALUE_ACCESSOR
 } from '@angular/forms';
 import { ProjectsTableFormValue } from '@r19/shared/models';
 import { Subject } from 'rxjs';
@@ -17,7 +18,14 @@ import { takeUntil, tap } from 'rxjs/operators';
   selector: 'r19-projects-table',
   templateUrl: './projects-table.component.html',
   styleUrls: ['./projects-table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: ProjectsTableComponent,
+      multi: true
+    }
+  ]
 })
 export class ProjectsTableComponent implements ControlValueAccessor, OnDestroy  {
   columnFiltersTurnedOn = false
@@ -26,6 +34,7 @@ export class ProjectsTableComponent implements ControlValueAccessor, OnDestroy  
   form: FormGroup = new FormGroup({
         columnFilters: new FormControl(false),
       });
+
   private _destroying$ = new Subject<void>();
 
   writeValue(v: ProjectsTableFormValue) {

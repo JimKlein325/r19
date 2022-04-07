@@ -3,54 +3,57 @@
         <table mat-table [dataSource]="projects" matSort>
           <ng-container *ngFor="let column of columns as ProjectSummaryKey" [matColumnDef]="column" [ngSwitch]="column">
             <th mat-header-cell *matHeaderCellDef>
-              <div mat-sort-header>{{ getHead(column) }}</div>
-              <div class="filter" >
+              <div class="header-cell" mat-sort-header>{{ getHead(column) }}</div>
+              <div class="filter" *ngIf="columnFiltersTurnedOn">
                 <div *ngSwitchCase="'title'">
                     <mat-form-field appearance="outline">
-                        <mat-label>Filter Title</mat-label>
-                        <input matInput formControlName="title"/>
+                        <mat-label>Filter</mat-label>
+                        <input matInput [formControl]="titleControl" />
                       </mat-form-field>
                 </div>
                 <div *ngSwitchCase="'division'">
                     <mat-form-field appearance="outline">
-                        <mat-label>Filter Division</mat-label>
-                        <mat-select formControlName="division">
+                        <mat-label>Filter</mat-label>
+                        <mat-select [formControl]="divisionControl">
                         <mat-option value="null"></mat-option>
                         <mat-option *ngFor="let division of divisions"  [value]="division">{{division}}</mat-option>
                         </mat-select>
                     </mat-form-field>
-                </div>
+                </div> 
                 <div *ngSwitchCase="'project_owner'">
                     <mat-form-field appearance="outline">
                         <mat-label>Filter</mat-label>
-                        <mat-select formControlName="project_owner">
+                        <mat-select [formControl]="projectOwnerControl">
                         <mat-option value="null"></mat-option>
                         <mat-option *ngFor="let projectOwner of projectOwners"  [value]="projectOwner">{{projectOwner}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
-                <div *ngSwitchCase="'budget'">
-                    <mat-form-field appearance="outline">
-                      <mat-label>Filter</mat-label>
-                      <mat-select>
-                        <mat-option value="one">First option</mat-option>
-                        <mat-option value="two">Second option</mat-option>
-                      </mat-select>
-                    </mat-form-field>
+                <div *ngSwitchCase="'budget'" >
+                    <mat-form-field appearance="outline" floatLabel="always">
+                        <input class="right-align" placeholder="0" matInput [formControl]="budgetControl" />
+                        <span matPrefix>$&nbsp;</span>
+                      </mat-form-field>
                 </div>
                 <div *ngSwitchCase="'status'">
                     <mat-form-field appearance="outline">
                         <mat-label>Filter</mat-label>
-                        <mat-select formControlName="status">
+                        <mat-select [formControl]="statusControl">
                         <mat-option value="null"></mat-option>
                         <mat-option *ngFor="let status of statuses"  [value]="status">{{statusOptions[status]}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
+                <div *ngSwitchCase="'created'"> 
+                    <r19-date-picker></r19-date-picker>
+                </div> 
+                <div *ngSwitchCase="'modified'"> 
+                    <r19-date-picker></r19-date-picker>
+                </div> 
 
               </div>
             </th>
-            <td mat-cell *matCellDef="let project">{{ project[column] | titlecase }}</td>
+            <td mat-cell *matCellDef="let project">{{ project[column] }}</td>
           </ng-container>
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>

@@ -9,10 +9,12 @@
     <ng-container *ngIf="statusSummary$ | async as books">
         {{books | json}}
     </ng-container>
-    <r19-projects-table></r19-projects-table>
+    <r19-projects-table [formControl]="tableForm"></r19-projects-table>
     <r19-projects-grid 
-    [projects]="projectSummaries$! | async" 
+    [formControl]="columnFilterForm"
+    [projects]="filteredProjects$! | async" 
     [projectOwners]="projectOwners$! | async"
+    [columnFiltersTurnedOn]="tableForm.value.columnFilters"
     ></r19-projects-grid>
     </mat-card-content>
 </mat-card>

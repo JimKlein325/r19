@@ -1,14 +1,20 @@
-import { TEXT_COLUMN_OPTIONS } from '@angular/cdk/table';
 import { Component, OnInit, ChangeDetectionStrategy, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
-import { ControlValueAccessor, FormControl, FormGroup } from '@angular/forms';
+import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ProjectSummary, projectSummaryColumnHeaders, ProjectSummaryControlValues, projectSummaryControlInitialValues, ProjectSummaryHearders, ProjectSummaryKey, Division, statusOptions, Status } from '@r19/shared/models';
-import { ReplaySubject, Subject } from 'rxjs';
+import { ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'r19-projects-grid',
   templateUrl: './projects-grid.component.html',
   styleUrls: ['./projects-grid.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: ProjectsGridComponent,
+      multi: true
+    }
+  ]
 })
 export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValueAccessor {
 
@@ -18,7 +24,7 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
   private _columnFiltersTurnedOn$ = new ReplaySubject<boolean>(1);
   columns: string[] = Object.keys(projectSummaryColumnHeaders);
   displayColumns: string[] = this.columns.concat(['actions']);
-  statuses: Status[] = Object.keys(statusOptions) as Status[];
+  statuses = Object.keys(statusOptions) as Status[];
   divisions:  Division[] = [ 'Accounting', 
   'Administration', 
   'Marketing',
@@ -26,13 +32,13 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
   'Sales']
   statusOptions = statusOptions;
   projectSummaryColumnHeaders = projectSummaryColumnHeaders;
+  hide = true;
 
-  private _destroying = new Subject<void>();
+  private _destroying$ = new Subject<void>();
   
   form: FormGroup = new FormGroup(
     this.columns.reduce(
       (acc, columnName) => {
-        console.log('acc', acc)
         const key = columnName as unknown as ProjectSummaryKey
         const controlValue = projectSummaryControlInitialValues[key]
         return ({ ...acc, [columnName]: new FormControl(controlValue) })},
@@ -40,7 +46,35 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
     )
   );
 
-  getHead(s: string) {
+  get titleControl(){
+    return this.form.get('title') as FormControl;
+ }
+ 
+ get divisionControl(){
+  return this.form.get('division') as FormControl;
+}
+
+get projectOwnerControl(){
+  return this.form.get('project_owner') as FormControl;
+}
+
+get budgetControl(){
+  return this.form.get('budget') as FormControl;
+}
+
+get statusControl(){
+  return this.form.get('status') as FormControl;
+}
+
+get createdControl(){
+  return this.form.get('created') as FormControl;
+}
+
+get modifiedControl(){
+  return this.form.get('modified') as FormControl;
+}
+
+getHead(s: string) {
     const t = s as ProjectSummaryKey
     return projectSummaryColumnHeaders[t]
   }
@@ -50,7 +84,12 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
   }
 
   registerOnChange(fn: any) {
-    // create your own implementation here
+    this.form.valueChanges
+      .pipe(
+        takeUntil(this._destroying$),
+        tap(fn)
+      )
+      .subscribe();
   }
 
   registerOnTouched(fn: any) {
@@ -68,6 +107,6 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
   }
 
   ngOnDestroy() {
-    this._destroying.next();
+    this._destroying$.next();
   }
 }

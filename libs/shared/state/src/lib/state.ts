@@ -10,7 +10,6 @@ import * as fromDashboard from './dashboard.reducer';
 import * as fromProjects from './projects.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { ProjectEffects } from './project.effects';
-import { ProjectSummary } from 'libs/shared/models/src/lib/project-summaries';
 
 export const FEATURE_KEY = 'project-dashboard';
 
@@ -41,7 +40,7 @@ export class SharedStateModule {}
 export const selectSharedState = createFeatureSelector<State>(FEATURE_KEY);
 
 /**
- * Books Selectors
+ * Dashboard Selectors
  */
 export const selectDashboardState = createSelector(
   selectSharedState,
@@ -70,7 +69,7 @@ export const selectProjectStatusSummary = createSelector(
     fromProjects.selectProjectStatusSummary
 );
 
-export const selectProjectManagers = createSelector(
+export const selectProjectOwners = createSelector(
     selectAllProjects,
     (summaries) => {
         const allPOs = summaries.map(summary => summary.project_owner);
