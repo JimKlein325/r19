@@ -1,0 +1,28 @@
+{
+  "root": "apps/acc-e2e",
+  "sourceRoot": "apps/acc-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/acc-e2e/cypress.json",
+        "devServerTarget": "acc:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "acc:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/acc-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["acc"]
+}

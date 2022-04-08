@@ -1,0 +1,88 @@
+{
+  "projectType": "application",
+  "root": "apps/acc",
+  "sourceRoot": "apps/acc/src",
+  "prefix": "test",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/acc",
+        "index": "apps/acc/src/index.html",
+        "main": "apps/acc/src/main.ts",
+        "polyfills": "apps/acc/src/polyfills.ts",
+        "tsConfig": "apps/acc/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": ["apps/acc/src/favicon.ico", "apps/acc/src/assets"],
+        "styles": ["apps/acc/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "apps/acc/src/environments/environment.ts",
+              "with": "apps/acc/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "acc:build:production"
+        },
+        "development": {
+          "browserTarget": "acc:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "acc:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/acc/src/**/*.ts", "apps/acc/src/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/acc"],
+      "options": {
+        "jestConfig": "apps/acc/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
