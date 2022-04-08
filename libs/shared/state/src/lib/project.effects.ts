@@ -1,9 +1,7 @@
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import {
-  mergeMap,
   map,
   exhaustMap,
-  concatMap,
   catchError,
 } from 'rxjs/operators';
 import { DashboardService } from '@r19/shared/services';
@@ -12,8 +10,6 @@ import * as ProjectsAPIActions from './projects.actions';
 
 import { of } from 'rxjs';
 import { Injectable } from '@angular/core';
-
-
 
 @Injectable()
 export class ProjectEffects {

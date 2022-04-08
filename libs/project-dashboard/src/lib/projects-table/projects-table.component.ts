@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   OnDestroy,
 } from '@angular/core';
 import {

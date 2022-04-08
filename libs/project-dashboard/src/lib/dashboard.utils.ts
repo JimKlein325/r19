@@ -16,6 +16,7 @@ export const projectColumnFilter = (
   ): boolean => {
       
     return projectSummaryKeys.every(key => {
+        // TODO add operator to budget filter,  created + modified filters
         switch (key) {
             case 'budget':
                 return key ? project[key] > (filter[key]) : true
@@ -27,11 +28,5 @@ export const projectColumnFilter = (
             default:
               return true;
           }
-        // if( key === 'title'){
-        //     return key ? (project[key] + '').includes(filter[key]) : true
-        // }        
-        // else{
-        //     return true
-        // }
     });
   };

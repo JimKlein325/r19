@@ -1,1 +1,24 @@
-<p>budget-summary works!</p>
+<ng-container *ngIf="this.summary as summary">
+    <mat-card class="status-card mat-elevation-z12">
+        <mat-card-title>Budget Summary</mat-card-title>
+        <mat-card-content>
+            <table>
+                <tr>
+                    <td>Archived Projects</td><td>{{summary.archived | currency}}</td>
+                </tr>
+                <tr>
+                    <td>Delivered Projects</td><td>{{summary.delivered | currency}}</td>
+                </tr>
+                <tr>
+                    <td>New Projects</td><td>{{summary.new | currency}}</td>
+                </tr>
+                <tr>
+                    <td>Working Projects</td><td>{{summary.working | currency}}</td>
+                </tr>
+                <tr>
+                    <td>Total</td><td>{{summary.total | currency}}</td>
+                </tr>
+            </table>
+        </mat-card-content>
+      </mat-card>
+</ng-container>

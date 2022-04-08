@@ -1,0 +1,24 @@
+<ng-container *ngIf="this.summary as summary">
+    <mat-card class="status-card mat-elevation-z12">
+        <mat-card-title>Status Summary</mat-card-title>
+        <mat-card-content>
+            <table>
+                <tr>
+                    <td>Archived Projects</td><td>{{summary.archived}}</td>
+                </tr>
+                <tr>
+                    <td>Delivered Projects</td><td>{{summary.delivered}}</td>
+                </tr>
+                <tr>
+                    <td>New Projects</td><td>{{summary.new}}</td>
+                </tr>
+                <tr>
+                    <td>Working Projects</td><td>{{summary.working}}</td>
+                </tr>
+                <tr>
+                    <td>Total</td><td>{{summary.total}}</td>
+                </tr>
+            </table>
+        </mat-card-content>
+      </mat-card>
+</ng-container>

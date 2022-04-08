@@ -1,7 +1,7 @@
-import { Action, createReducer, createSelector, on } from '@ngrx/store';
+import { createReducer, createSelector, on } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
-import { calculateBudgetTotal, ProjectSummary, calculateStatusSummary } from '../../../models/src/lib/project-summaries';
+import { calculateBudgetTotal, ProjectSummary, calculateStatusSummary, calculateBudgetSummary } from '../../../models/src/lib/project-summaries';
 import * as ProjectsActions from './projects.actions';
 
 export const projectsesFeatureKey = 'dashboard';
@@ -74,4 +74,9 @@ export const selectBudgetTotals = createSelector(
 export const selectProjectStatusSummary = createSelector(
   selectAll,
   calculateStatusSummary
+);
+
+export const selectProjectBudgetSummary = createSelector(
+  selectAll,
+  calculateBudgetSummary
 );

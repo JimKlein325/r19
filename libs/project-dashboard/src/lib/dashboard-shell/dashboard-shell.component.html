@@ -1,20 +1,21 @@
 <mat-card class="dashboard-card mat-elevation-z24">
     <mat-card-title>Dashboard</mat-card-title>
     <mat-card-content>
-      <p>This card has divider and indeterminate progress as footer</p>
-      <p></p>
-      <ng-container *ngIf="budgetTotal$ | async as books">
-        {{books}}
-    </ng-container>
-    <ng-container *ngIf="statusSummary$ | async as books">
-        {{books | json}}
-    </ng-container>
-    <r19-projects-table [formControl]="tableForm"></r19-projects-table>
-    <r19-projects-grid 
-    [formControl]="columnFilterForm"
-    [projects]="filteredProjects$! | async" 
-    [projectOwners]="projectOwners$! | async"
-    [columnFiltersTurnedOn]="tableForm.value.columnFilters"
-    ></r19-projects-grid>
+        <div class="status-bar">
+            <r19-status-summary [summary]="statusSummary$ | async"></r19-status-summary>
+            <r19-budget-summary [summary]="budgetSummary$ | async"></r19-budget-summary>
+        </div>
+        <mat-card class="projects-card mat-elevation-z16">
+            <mat-card-title>Projects</mat-card-title>
+            <mat-card-content>
+                <r19-projects-table [formControl]="tableForm"></r19-projects-table>
+                <r19-projects-grid 
+                [formControl]="columnFilterForm"
+                [projects]="filteredProjects$! | async" 
+                [projectOwners]="projectOwners$! | async"
+                [columnFiltersTurnedOn]="tableForm.value.columnFilters"
+                ></r19-projects-grid>
+            </mat-card-content>
+        </mat-card>
     </mat-card-content>
 </mat-card>

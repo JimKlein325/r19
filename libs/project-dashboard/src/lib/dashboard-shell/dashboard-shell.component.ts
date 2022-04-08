@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import {DashboardPageActions} from '@r19/shared/state';
 import { map, Observable, shareReplay, startWith, switchMap } from 'rxjs';
-import { selectAllProjects, selectProjectBudgetTotals, selectProjectStatusSummary, selectProjectOwners } from '@r19/shared/state'
+import { selectAllProjects, selectProjectBudgetSummary, selectProjectStatusSummary, selectProjectOwners } from '@r19/shared/state'
 import {ProjectSummary, StatusReport} from '@r19/shared/models'
 import { FormControl } from '@angular/forms';
 import { projectColumnFilter } from '../dashboard.utils';
@@ -14,7 +14,7 @@ import { projectColumnFilter } from '../dashboard.utils';
   styleUrls: ['./dashboard-shell.component.scss']
 })
 export class DashboardShellComponent implements OnInit {
-  budgetTotal$: Observable<number>;
+  budgetSummary$: Observable<StatusReport>;
   statusSummary$: Observable<StatusReport>;
   projectSummaries$: Observable<ProjectSummary[]> = this.store.select(selectAllProjects).pipe(map(projects => projects?? []));
   projectOwners$: Observable<string[]> = this.store.select(selectProjectOwners)
@@ -33,7 +33,7 @@ export class DashboardShellComponent implements OnInit {
   filteredProjects$!: Observable<ProjectSummary[]>;
 
   constructor(private store: Store) {
-    this.budgetTotal$ = store.select(selectProjectBudgetTotals);
+    this.budgetSummary$ = store.select(selectProjectBudgetSummary);
     this.statusSummary$ = store.select(selectProjectStatusSummary);
     this.store.dispatch(DashboardPageActions.enter());
   }

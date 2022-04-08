@@ -63,7 +63,8 @@
             </mat-cell>
         </ng-container> 
           <tr mat-header-row *matHeaderRowDef="columns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayColumns"></tr>
+          <tr mat-row 
+          *matRowDef="let row; columns: displayColumns"></tr>
         </table>
     </ng-container>
 </div>

@@ -94,4 +94,31 @@ export interface ProjectSummary {
       }
     }, {archived: 0, delivered: 0, new: 0, working: 0, total: 0} as StatusReport);
   }
+  export function calculateBudgetSummary(projects: ProjectSummary[]): StatusReport {
+    return projects.reduce((acc, project) => {
+      const budget = project.budget;
+
+      switch (project.status) {
+        case 'archived':
+          acc =  {...acc, archived: addProjectBudget(acc.archived, budget), total: addProjectBudget(acc.total, budget)}
+          return acc
+        case 'delivered':
+          acc =  {...acc, delivered: addProjectBudget(acc.archived, budget), total: addProjectBudget(acc.total, budget)}
+          return acc
+        case 'new':
+          acc =  {...acc, new: addProjectBudget(acc.archived, budget), total: addProjectBudget(acc.total, budget)}
+          return acc
+        case 'working':
+          acc =  {...acc, working: addProjectBudget(acc.archived, budget), total: addProjectBudget(acc.total, budget)}
+          return acc
+        default:
+          return acc;
+      }
+    }, {archived: 0, delivered: 0, new: 0, working: 0, total: 0} as StatusReport);
+  }
+
+  const addProjectBudget =  (currentTotal: number, currentValue: number ) => {
+    return currentTotal+currentValue
+  }
+
   

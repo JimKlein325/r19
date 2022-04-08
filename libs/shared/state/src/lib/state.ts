@@ -6,7 +6,6 @@ import {
   MetaReducer,
   StoreModule,
 } from '@ngrx/store';
-import * as fromDashboard from './dashboard.reducer';
 import * as fromProjects from './projects.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { ProjectEffects } from './project.effects';
@@ -52,14 +51,7 @@ export const selectAllProjects = createSelector(
     selectDashboardState,
   fromProjects.selectAll
 );
-// export const selectActiveBook = createSelector(
-//   selectBooksState,
-//   fromBooks.selectActiveBook
-// );
-// export const selectBooksEarningsTotals = createSelector(
-//   selectBooksState,
-//   fromBooks.selectEarningsTotals
-// );
+
 export const selectProjectBudgetTotals = createSelector(
     selectDashboardState,
     fromProjects.selectBudgetTotals
@@ -67,6 +59,11 @@ export const selectProjectBudgetTotals = createSelector(
 export const selectProjectStatusSummary = createSelector(
     selectDashboardState,
     fromProjects.selectProjectStatusSummary
+);
+
+export const selectProjectBudgetSummary = createSelector(
+    selectDashboardState,
+    fromProjects.selectProjectBudgetSummary
 );
 
 export const selectProjectOwners = createSelector(

@@ -10,6 +10,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ProjectsTableComponent } from './projects-table/projects-table.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePickerComponent } from './date-picker/date-picker.component';
+import { StatusSummaryComponent } from './status-summary/status-summary.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { DatePickerComponent } from './date-picker/date-picker.component';
     BudgetSummaryComponent,
     ProjectsGridComponent,
     ProjectsTableComponent,
-    DatePickerComponent
+    DatePickerComponent,
+    StatusSummaryComponent
   ],
   exports:  [
     DashboardShellComponent,
