@@ -8,6 +8,8 @@ export interface ProjectSummary {
     modified: string | null;
   }
 
+  export type ProjectRequiredProps = Pick<ProjectSummary, 'project_owner' | 'budget' | 'status'>;
+
   export type ProjectSummaryKey = keyof ProjectSummary;
   
   export type ProjectSummaryHearders = Record<ProjectSummaryKey, string>;

@@ -24,10 +24,15 @@ export class DashboardShellComponent implements OnInit {
     title: '',
     division: '',
     project_owner: '',
-    budget: '',
+    budget: 0,
     status: '',
     created: '',
     modified: ''
+  })
+  projectEditForm = new FormControl ({
+    project_owner: '',
+    budget: 0,
+    status: '',
   })
 
   filteredProjects$!: Observable<ProjectSummary[]>;
@@ -37,6 +42,7 @@ export class DashboardShellComponent implements OnInit {
     this.statusSummary$ = store.select(selectProjectStatusSummary);
     this.store.dispatch(DashboardPageActions.enter());
   }
+
 
   ngOnInit() {
 
@@ -50,6 +56,10 @@ export class DashboardShellComponent implements OnInit {
       ),
       shareReplay(1)
     );
+  }
+
+  handleSelectProject(project: ProjectSummary){
+    this.store.dispatch(DashboardPageActions.selectProject({ title: project.title }))
   }
 
 

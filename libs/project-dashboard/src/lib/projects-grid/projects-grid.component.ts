@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, ChangeDetectionStrategy, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, OnChanges, OnDestroy, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ProjectSummary, projectSummaryColumnHeaders, ProjectSummaryControlValues, projectSummaryControlInitialValues, ProjectSummaryKey, Division, statusOptions, Status } from '@r19/shared/models';
 import { ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
@@ -29,6 +29,8 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
   @Input() projects: ProjectSummary[] | null = [];
   @Input() columnFiltersTurnedOn = false;
   @Input() projectOwners: string[] | null = [];
+  @Output() selectProject: EventEmitter<ProjectSummary> = new EventEmitter();
+  
   private _columnFiltersTurnedOn$ = new ReplaySubject<boolean>(1);
   columns: string[] = Object.keys(projectSummaryColumnHeaders);
   displayColumns: string[] = this.columns.concat(['actions']);
@@ -57,6 +59,7 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
 
   expandCollapse(project: ProjectSummary) {
     this.expandedProject = this.expandedProject === project ? null : project
+    this.selectProject.emit(project)
   }
 
   get titleControl(){

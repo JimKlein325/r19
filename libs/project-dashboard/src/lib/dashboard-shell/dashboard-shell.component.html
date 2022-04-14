@@ -14,6 +14,7 @@
                 [projects]="filteredProjects$! | async" 
                 [projectOwners]="projectOwners$! | async"
                 [columnFiltersTurnedOn]="tableForm.value.columnFilters"
+                (selectProject)="handleSelectProject($event)"
                 ></r19-projects-grid>
             </mat-card-content>
         </mat-card>

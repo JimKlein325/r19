@@ -6,9 +6,8 @@ import { BudgetSummaryComponent } from './budget-summary/budget-summary.componen
 import { SharedMaterialModule } from '@r19/shared/material';
 import { SharedStateModule } from '@r19/shared/state';
 import { ProjectsGridComponent } from './projects-grid/projects-grid.component';
-import { MatTableModule } from '@angular/material/table';
 import { ProjectsTableComponent } from './projects-table/projects-table.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { StatusSummaryComponent } from './status-summary/status-summary.component';
 
@@ -17,8 +16,8 @@ import { StatusSummaryComponent } from './status-summary/status-summary.componen
     CommonModule,
     SharedMaterialModule,
     SharedStateModule,
-    MatTableModule,
-    SharedMaterialModule,
+    // SharedMaterialModule,
+    FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       /* {path: '', pathMatch: 'full', component: InsertYourComponentHere} */
