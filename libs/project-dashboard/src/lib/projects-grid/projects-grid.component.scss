@@ -3,6 +3,13 @@ table {
     padding-top: 8px;
 }
 
+h3 {
+  display: flex;
+  align-self: center;
+  margin-right: 1rem;
+
+}
+
 tr.detail-row {
   height: 0;
 }
@@ -22,6 +29,8 @@ tr.project-row:not(.expanded-project):active {
 .project-detail {
   overflow: hidden;
   display: flex;
+  justify-content: center;
+  margin-top: 1rem;
 }
 
 .mat-sort-header {    

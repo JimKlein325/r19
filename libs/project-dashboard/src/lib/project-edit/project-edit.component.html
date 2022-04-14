@@ -1,0 +1,19 @@
+<form [formGroup]="form" class="edit-form">
+        <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Project Owner</mat-label>
+            <mat-select formControlName="project_owner">
+            <mat-option *ngFor="let projectOwner of projectOwners$ | async"  [value]="projectOwner">{{projectOwner}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Budget</mat-label>
+            <input class="right-align" placeholder="0" matInput formControlName="budget" />
+            <span matPrefix>$&nbsp;</span>
+          </mat-form-field>
+        <mat-form-field appearance="outline" floatLabel="always">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+            <mat-option *ngFor="let status of statuses"  [value]="status">{{statusOptions[status]}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+</form>

@@ -32,7 +32,7 @@
                 <div *ngSwitchCase="'budget'" >
                     <mat-form-field appearance="outline" floatLabel="always">
                         <input class="right-align" placeholder="0" matInput [formControl]="budgetControl" />
-                        <span matPrefix>$&nbsp;</span>
+                        <span matPrefix> >  $&nbsp;</span>
                       </mat-form-field>
                 </div>
                 <div *ngSwitchCase="'status'">
@@ -58,9 +58,9 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>
             </th>
-            <mat-cell *cdkCellDef="let row" >
-                 <button md-raised-button >Details</button> 
-            </mat-cell>
+          <mat-cell *cdkCellDef="let row" >
+              <button md-raised-button >Details</button> 
+          </mat-cell>
         </ng-container> 
 
   <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
@@ -69,8 +69,8 @@
       <div class="project-detail"
            [@detailExpand]="project === expandedProject ? 'expanded' : 'collapsed'">
          <div class="project-detail">
-            <h1>detail content</h1> 
-
+            <h3>Editable Fields:</h3> 
+            <r19-project-edit [currentProjectSummary]="selectedProject$ | async"></r19-project-edit>"
 
 
 

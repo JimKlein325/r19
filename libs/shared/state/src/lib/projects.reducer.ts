@@ -3,6 +3,8 @@ import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { calculateBudgetTotal, ProjectSummary, calculateStatusSummary, calculateBudgetSummary } from '../../../models/src/lib/project-summaries';
 import * as ProjectsActions from './projects.actions';
+import { DashboardPageActions } from '..';
+import { state } from '@angular/animations';
 
 export const projectsesFeatureKey = 'dashboard';
 
@@ -48,6 +50,16 @@ export const reducer = createReducer(
   on(ProjectsActions.clearProjectss,
     state => adapter.removeAll(state)
   ),
+  on(DashboardPageActions.updateProject,
+    (state, action) => {
+      const state2 =  adapter.updateOne(
+        {id: action.title, changes: action.changes}, 
+        state)
+        
+        console.log('hello state', state2)
+      return state2;
+      }
+      )
 );
 
 export const {

@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, ChangeDetectionStrategy, Input, OnChanges, OnDestroy, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ProjectSummary, projectSummaryColumnHeaders, ProjectSummaryControlValues, projectSummaryControlInitialValues, ProjectSummaryKey, Division, statusOptions, Status } from '@r19/shared/models';
-import { ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'r19-projects-grid',
@@ -29,6 +29,9 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
   @Input() projects: ProjectSummary[] | null = [];
   @Input() columnFiltersTurnedOn = false;
   @Input() projectOwners: string[] | null = [];
+  @Input()
+  projectEditForm!: FormControl;
+  
   @Output() selectProject: EventEmitter<ProjectSummary> = new EventEmitter();
   
   private _columnFiltersTurnedOn$ = new ReplaySubject<boolean>(1);
@@ -57,9 +60,13 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
     )
   );
 
+  _selectedProject$ = new Subject<ProjectSummary>();
+  selectedProject$ = this._selectedProject$.asObservable();
+
   expandCollapse(project: ProjectSummary) {
     this.expandedProject = this.expandedProject === project ? null : project
-    this.selectProject.emit(project)
+    this.selectProject.emit(project);
+    this._selectedProject$.next(project)
   }
 
   get titleControl(){

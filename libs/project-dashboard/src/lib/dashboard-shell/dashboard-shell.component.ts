@@ -29,11 +29,6 @@ export class DashboardShellComponent implements OnInit {
     created: '',
     modified: ''
   })
-  projectEditForm = new FormControl ({
-    project_owner: '',
-    budget: 0,
-    status: '',
-  })
 
   filteredProjects$!: Observable<ProjectSummary[]>;
 
@@ -56,10 +51,6 @@ export class DashboardShellComponent implements OnInit {
       ),
       shareReplay(1)
     );
-  }
-
-  handleSelectProject(project: ProjectSummary){
-    this.store.dispatch(DashboardPageActions.selectProject({ title: project.title }))
   }
 
 
