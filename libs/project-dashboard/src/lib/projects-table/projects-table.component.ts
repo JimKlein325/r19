@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ChangeDetectionStrategy,
   Component,
@@ -49,9 +51,9 @@ export class ProjectsTableComponent implements ControlValueAccessor, OnDestroy  
       .subscribe();
   }
 
-  registerOnTouched(fn: any) {
-    // TODO implement
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  registerOnTouched(fn: any) {}
 
   setDisabledState(isDisabled: boolean) {
     isDisabled ? this.form.disable() : this.form.enable();

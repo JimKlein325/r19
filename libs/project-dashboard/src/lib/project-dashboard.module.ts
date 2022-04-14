@@ -18,6 +18,7 @@ import { StatusSummaryComponent } from './status-summary/status-summary.componen
     SharedMaterialModule,
     SharedStateModule,
     MatTableModule,
+    SharedMaterialModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       /* {path: '', pathMatch: 'full', component: InsertYourComponentHere} */

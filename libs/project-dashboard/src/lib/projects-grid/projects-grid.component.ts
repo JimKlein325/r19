@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ChangeDetectionStrategy, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ProjectSummary, projectSummaryColumnHeaders, ProjectSummaryControlValues, projectSummaryControlInitialValues, ProjectSummaryKey, Division, statusOptions, Status } from '@r19/shared/models';
@@ -14,7 +15,14 @@ import { ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
       useExisting: ProjectsGridComponent,
       multi: true
     }
-  ]
+  ],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValueAccessor {
 
@@ -33,6 +41,7 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
   statusOptions = statusOptions;
   projectSummaryColumnHeaders = projectSummaryColumnHeaders;
   hide = true;
+  expandedProject: ProjectSummary | null = null;
 
   private _destroying$ = new Subject<void>();
   
@@ -45,6 +54,10 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
       {}
     )
   );
+
+  expandCollapse(project: ProjectSummary) {
+    this.expandedProject = this.expandedProject === project ? null : project
+  }
 
   get titleControl(){
     return this.form.get('title') as FormControl;

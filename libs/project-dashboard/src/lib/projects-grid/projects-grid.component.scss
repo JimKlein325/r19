@@ -3,6 +3,27 @@ table {
     padding-top: 8px;
 }
 
+tr.detail-row {
+  height: 0;
+}
+
+tr.project-row:not(.expanded-project):hover {
+  background: whitesmoke;
+}
+
+tr.project-row:not(.expanded-project):active {
+  background: #efefef;
+}
+
+.project-row td {
+  border-bottom-width: 0;
+}
+
+.project-detail {
+  overflow: hidden;
+  display: flex;
+}
+
 .mat-sort-header {    
         font-size: 1rem;
 }

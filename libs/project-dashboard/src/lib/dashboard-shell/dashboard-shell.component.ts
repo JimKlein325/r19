@@ -50,7 +50,6 @@ export class DashboardShellComponent implements OnInit {
       ),
       shareReplay(1)
     );
-
   }
 
 
