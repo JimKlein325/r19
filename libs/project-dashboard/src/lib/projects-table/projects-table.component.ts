@@ -31,7 +31,6 @@ import { takeUntil, tap } from 'rxjs/operators';
 export class ProjectsTableComponent implements ControlValueAccessor, OnDestroy  {
   columnFiltersTurnedOn = false
 
-  
   form: FormGroup = new FormGroup({
         columnFilters: new FormControl(false),
       });

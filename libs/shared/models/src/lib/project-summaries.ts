@@ -14,7 +14,7 @@ export interface ProjectSummary {
   
   export type ProjectSummaryHearders = Record<ProjectSummaryKey, string>;
 
-  export type ProjectSummaryControlValues = Record<ProjectSummaryKey, string | boolean | Date | null>
+  export type ProjectSummaryControlValues = Record<ProjectSummaryKey, string | boolean | DateRange | null>
 
   export const  projectSummaryKeys: (keyof ProjectSummary)[] =  [ 'title', 'division', 'project_owner', 'budget', 'status', 'created', 'modified'];
 
@@ -34,8 +34,8 @@ export interface ProjectSummary {
     "project_owner": "",
     "budget": "",
     "status": "null",
-    "created": null,
-    "modified": null
+    "created": {start: null, end: null},
+    "modified":  {start: null, end: null}
   }
 
   export type Division =
@@ -121,6 +121,11 @@ export interface ProjectSummary {
 
   const addProjectBudget =  (currentTotal: number, currentValue: number ) => {
     return currentTotal+currentValue
+  }
+
+  export interface DateRange {
+    start: Date | null;
+    end: Date | null;
   }
 
   

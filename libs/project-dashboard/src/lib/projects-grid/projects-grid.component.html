@@ -45,7 +45,7 @@
                     </mat-form-field>
                 </div>
                 <div *ngSwitchCase="'created'"> 
-                    <r19-date-picker></r19-date-picker>
+                    <r19-date-picker [formControl]="createdControl"></r19-date-picker>
                 </div> 
                 <div *ngSwitchCase="'modified'"> 
                     <r19-date-picker></r19-date-picker>
@@ -70,15 +70,7 @@
            [@detailExpand]="project === expandedProject ? 'expanded' : 'collapsed'">
          <div class="project-detail">
             <h3>Editable Fields:</h3> 
-            <r19-project-edit [currentProjectSummary]="selectedProject$ | async"></r19-project-edit>"
-
-
-
-
-
-
-
-            
+            <r19-project-edit [currentProjectSummary]="selectedProject$ | async" ></r19-project-edit>"
         </div>
       </div>
     </td>

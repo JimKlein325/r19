@@ -29,11 +29,28 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
   @Input() projects: ProjectSummary[] | null = [];
   @Input() columnFiltersTurnedOn = false;
   @Input() projectOwners: string[] | null = [];
+  // @Input()
+  // createdFormControl!: FormControl;
   @Input()
-  projectEditForm!: FormControl;
-  
+  set createdFormControl(control: FormControl)  {
+    this._createdDataRange$.next(control ?? new FormControl()) ;
+  }
+  createdRangeForm = new FormControl ({
+    start: null,
+    end: null
+  })
+
+  createdInitialValue = new FormControl({
+    start: null,
+    end: null
+  })
+
+
   @Output() selectProject: EventEmitter<ProjectSummary> = new EventEmitter();
   
+  private _createdDataRange$ = new BehaviorSubject<FormControl>(new FormControl());
+  createdDateRangeControl$ = this._createdDataRange$.asObservable();
+
   private _columnFiltersTurnedOn$ = new ReplaySubject<boolean>(1);
   columns: string[] = Object.keys(projectSummaryColumnHeaders);
   displayColumns: string[] = this.columns.concat(['actions']);
@@ -49,12 +66,28 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
   expandedProject: ProjectSummary | null = null;
 
   private _destroying$ = new Subject<void>();
+
+  testFormControl = new FormControl({start: new Date, end: new Date()})
   
   form: FormGroup = new FormGroup(
     this.columns.reduce(
       (acc, columnName) => {
         const key = columnName as unknown as ProjectSummaryKey
         const controlValue = projectSummaryControlInitialValues[key]
+
+
+
+        if(columnName==='created') {
+          return ({ ...acc,
+          created: new FormGroup({
+            start: new FormControl(null),
+            end: new FormControl(null)
+          })})
+        }
+
+
+
+        //Set initial value for created and modified here.  skip default behavior.
         return ({ ...acc, [columnName]: new FormControl(controlValue) })},
       {}
     )

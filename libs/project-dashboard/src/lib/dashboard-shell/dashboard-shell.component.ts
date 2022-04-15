@@ -26,8 +26,17 @@ export class DashboardShellComponent implements OnInit {
     project_owner: '',
     budget: 0,
     status: '',
-    created: '',
-    modified: ''
+    created: {start: null, end: null},
+    modified: {start: null, end: null}
+  })
+  createdRangeForm = new FormControl ({
+    start: null,
+    end: null
+  })
+
+  modifiedRangeForm = new FormControl ({
+    start: null,
+    end: null
   })
 
   filteredProjects$!: Observable<ProjectSummary[]>;

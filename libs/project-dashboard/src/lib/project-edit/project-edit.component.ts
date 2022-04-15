@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ProjectSummary, Status, statusOptions } from '@r19/shared/models';
 import { DashboardPageActions, selectProjectOwners } from '@r19/shared/state';
@@ -19,13 +19,10 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
 
   @Input()
   set currentProjectSummary(project: ProjectSummary | null) {
-    // set currentProjectSummary({project_owner, budget, status}: ProjectSummary) {
-      // this._currentProject = projectSummary;
       if(project) {
         this._currentProjectSummary = project;
         const {project_owner, budget, status} = project;
         this.form.setValue({project_owner, budget, status}, {emitEvent: false});
-        console.log('props', {project_owner, budget, status});
       }
   }
 
@@ -44,6 +41,7 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
       tap( value => console.log('value', value)),
       tap(({project_owner, budget, status }) => {
         const updatedProject: ProjectSummary = {...this._currentProjectSummary, project_owner, budget, status} as ProjectSummary;
+        debugger
         this.store.dispatch(DashboardPageActions.updateProject({title: updatedProject.title, changes: updatedProject}));
       })
     )

@@ -51,15 +51,8 @@ export const reducer = createReducer(
     state => adapter.removeAll(state)
   ),
   on(DashboardPageActions.updateProject,
-    (state, action) => {
-      const state2 =  adapter.updateOne(
-        {id: action.title, changes: action.changes}, 
-        state)
-        
-        console.log('hello state', state2)
-      return state2;
-      }
-      )
+    (state, action) => adapter.updateOne({id: action.title, changes: action.changes}, state)
+  )
 );
 
 export const {
