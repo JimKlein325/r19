@@ -41,7 +41,6 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
       tap( value => console.log('value', value)),
       tap(({project_owner, budget, status }) => {
         const updatedProject: ProjectSummary = {...this._currentProjectSummary, project_owner, budget, status} as ProjectSummary;
-        debugger
         this.store.dispatch(DashboardPageActions.updateProject({title: updatedProject.title, changes: updatedProject}));
       })
     )
