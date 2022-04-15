@@ -75,8 +75,6 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
         const key = columnName as unknown as ProjectSummaryKey
         const controlValue = projectSummaryControlInitialValues[key]
 
-
-
         if(columnName==='created') {
           return ({ ...acc,
           created: new FormGroup({
@@ -85,7 +83,13 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
           })})
         }
 
-
+        if(columnName==='modified') {
+          return ({ ...acc,
+          modified: new FormGroup({
+            start: new FormControl(null),
+            end: new FormControl(null)
+          })})
+        }
 
         //Set initial value for created and modified here.  skip default behavior.
         return ({ ...acc, [columnName]: new FormControl(controlValue) })},
@@ -122,12 +126,28 @@ get statusControl(){
   return this.form.get('status') as FormControl;
 }
 
-get createdControl(){
-  return this.form.get('created') as FormControl;
+get createdFormGroup(){
+  return this.form.get('created') as FormGroup;
 }
 
-get modifiedControl(){
-  return this.form.get('modified') as FormControl;
+get startControl(){
+  return this.createdFormGroup.get('start') as FormControl;
+}
+
+get endControl(){
+  return this.createdFormGroup.get('end') as FormControl;
+}
+
+get modifiedFormGroup(){
+  return this.form.get('modified') as FormGroup;
+}
+
+get startControl_modified(){
+  return this.modifiedFormGroup.get('start') as FormControl;
+}
+
+get endControl_modified(){
+  return this.modifiedFormGroup.get('end') as FormControl;
 }
 
 getHead(s: string) {

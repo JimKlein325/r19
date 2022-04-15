@@ -45,10 +45,34 @@
                     </mat-form-field>
                 </div>
                 <div *ngSwitchCase="'created'"> 
-                    <r19-date-picker [formControl]="createdControl"></r19-date-picker>
+                  <mat-form-field appearance="fill" class="date-picker-wrapper">
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [formGroup]="form" [rangePicker]="picker">
+                        <input matStartDate [formControl]="startControl" placeholder="Start date">
+                        <input matEndDate [formControl]="endControl" placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+
+                    <mat-error *ngIf="startControl.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                   <mat-error *ngIf="endControl.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                  </mat-form-field>
                 </div> 
                 <div *ngSwitchCase="'modified'"> 
-                    <r19-date-picker></r19-date-picker>
+                  <mat-form-field appearance="fill" class="date-picker-wrapper">
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input [formGroup]="form" [rangePicker]="picker">
+                        <input matStartDate [formControl]="startControl_modified" placeholder="Start date">
+                        <input matEndDate [formControl]="endControl_modified" placeholder="End date">
+                    </mat-date-range-input>
+                    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker></mat-date-range-picker>
+
+                    <mat-error *ngIf="startControl.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                   <mat-error *ngIf="endControl.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                  </mat-form-field>
                 </div> 
 
               </div>
