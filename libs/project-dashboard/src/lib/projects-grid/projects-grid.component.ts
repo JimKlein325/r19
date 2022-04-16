@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ChangeDetectionStrategy, Input, OnChanges, OnDestroy, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';

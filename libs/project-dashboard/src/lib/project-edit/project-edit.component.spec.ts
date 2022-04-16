@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { provideMockStore, MockStore } from '@ngrx/store/
+import { provideMockStore, MockStore } from '@ngrx/store/testing'
 import { ProjectEditComponent } from './project-edit.component';
 
 describe('ProjectEditComponent', () => {
