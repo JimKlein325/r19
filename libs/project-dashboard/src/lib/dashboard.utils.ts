@@ -17,7 +17,7 @@ export const projectColumnFilter = (
   ): boolean => {
       
     return projectSummaryKeys.every(key => {
-        // TODO add operator to budget filter,  created + modified filters
+
         switch (key) {
             case 'budget':
                 return key ? project[key] > (filter[key]) : true
@@ -25,7 +25,7 @@ export const projectColumnFilter = (
             case 'project_owner':
             case 'status':
             case 'title':
-              return key ? (project[key] + '').includes(filter[key]) : true
+              return key && filter[key] ? (project[key] + '').includes(filter[key]) : true
             case 'modified':
             case 'created':
               return isWithinRange(project[key], filter[key])

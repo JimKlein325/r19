@@ -30,7 +30,6 @@ export class DatePickerComponent implements ControlValueAccessor, OnDestroy  {
   private _destroying$ = new Subject<void>();
 
   writeValue(v: DateRange) {
-    debugger
       this.form.setValue(v);
   }
 

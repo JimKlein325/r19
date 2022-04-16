@@ -15,7 +15,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Filter</mat-label>
                         <mat-select [formControl]="divisionControl">
-                        <mat-option value="null"></mat-option>
+                        <mat-option value=""></mat-option>
                         <mat-option *ngFor="let division of divisions"  [value]="division">{{division}}</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -24,7 +24,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Filter</mat-label>
                         <mat-select [formControl]="projectOwnerControl">
-                        <mat-option value="null"></mat-option>
+                        <mat-option value=""></mat-option>
                         <mat-option *ngFor="let projectOwner of projectOwners"  [value]="projectOwner">{{projectOwner}}</mat-option>
                         </mat-select>
                     </mat-form-field>
@@ -39,12 +39,13 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Filter</mat-label>
                         <mat-select [formControl]="statusControl">
-                        <mat-option value="null"></mat-option>
+                        <mat-option value=""></mat-option>
                         <mat-option *ngFor="let status of statuses"  [value]="status">{{statusOptions[status]}}</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
                 <div *ngSwitchCase="'created'"> 
+                  <!-- TODO refactor into reusable component -->
                   <mat-form-field appearance="fill" class="date-picker-wrapper">
                     <mat-label>Enter a date range</mat-label>
                     <mat-date-range-input [formGroup]="form" [rangePicker]="picker">

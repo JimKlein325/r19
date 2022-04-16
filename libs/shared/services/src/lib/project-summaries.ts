@@ -1,4 +1,4 @@
-import {ProjectSummary} from '../../../models/src/lib/project-summaries'
+import { ProjectSummary } from '@r19/shared/models';
 export const projectSummaries: ProjectSummary[] = 
 [{
     "title": "Tagtune",
