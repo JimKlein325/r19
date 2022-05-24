@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { ProjectSummary, Status, statusOptions } from '@r19/shared/models';
@@ -13,9 +13,9 @@ import { Observable, Subject, takeUntil, tap } from 'rxjs';
 export class ProjectEditComponent implements OnInit, OnDestroy {
   statuses = Object.keys(statusOptions) as Status[];
   statusOptions = statusOptions;
-  projectOwners$: Observable<string[]> = this.store.select(selectProjectOwners)
   private _destroying$ = new Subject<void>();
   private _currentProjectSummary!: ProjectSummary;
+  private _projectOwners: string[] = []
 
   @Input()
   set currentProjectSummary(project: ProjectSummary | null) {
@@ -25,6 +25,14 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
         this.form.setValue({project_owner, budget, status}, {emitEvent: false});
       }
   }
+  @Input()
+  set projectOwners(projectOwners: string[] | null) {
+      if(projectOwners) {
+        this._projectOwners = projectOwners;
+      }
+  }
+
+  @Output() projectUpdate = new EventEmitter<ProjectSummary>();
 
   form = new FormGroup({
     project_owner: new FormControl(['']),
@@ -32,16 +40,12 @@ export class ProjectEditComponent implements OnInit, OnDestroy {
     status: new FormControl(''),
   });
 
-  constructor(private store: Store) {
-  }
-
   ngOnInit(): void {
     this.form.valueChanges.pipe(
       takeUntil(this._destroying$),
-      tap( value => console.log('value', value)),
       tap(({project_owner, budget, status }) => {
         const updatedProject: ProjectSummary = {...this._currentProjectSummary, project_owner, budget, status} as ProjectSummary;
-        this.store.dispatch(DashboardPageActions.updateProject({title: updatedProject.title, changes: updatedProject}));
+        this.projectUpdate.emit(updatedProject)
       })
     )
     .subscribe();

@@ -95,7 +95,10 @@
            [@detailExpand]="project === expandedProject ? 'expanded' : 'collapsed'">
          <div class="project-detail">
             <h3>Editable Fields:</h3> 
-            <r19-project-edit [currentProjectSummary]="selectedProject$ | async" ></r19-project-edit>"
+            <r19-project-edit 
+            [currentProjectSummary]="selectedProject$ | async" 
+            [projectOwners]="projectOwners$ | async"
+            ></r19-project-edit>
         </div>
       </div>
     </td>

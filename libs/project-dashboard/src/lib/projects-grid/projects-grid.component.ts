@@ -2,8 +2,10 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ChangeDetectionStrategy, Input, OnChanges, OnDestroy, SimpleChanges, EventEmitter, Output } from '@angular/core';
 import { ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { ProjectSummary, projectSummaryColumnHeaders, ProjectSummaryControlValues, projectSummaryControlInitialValues, ProjectSummaryKey, Division, statusOptions, Status } from '@r19/shared/models';
-import { BehaviorSubject, ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
+import { DashboardPageActions, selectProjectOwners } from '@r19/shared/state';
+import { BehaviorSubject, Observable, ReplaySubject, Subject, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'r19-projects-grid',
@@ -30,8 +32,6 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
   @Input() projects: ProjectSummary[] | null = [];
   @Input() columnFiltersTurnedOn = false;
   @Input() projectOwners: string[] | null = [];
-  // @Input()
-  // createdFormControl!: FormControl;
   @Input()
   set createdFormControl(control: FormControl)  {
     this._createdDataRange$.next(control ?? new FormControl()) ;
@@ -55,6 +55,8 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
   private _columnFiltersTurnedOn$ = new ReplaySubject<boolean>(1);
   columns: string[] = Object.keys(projectSummaryColumnHeaders);
   displayColumns: string[] = this.columns.concat(['actions']);
+  projectOwners$: Observable<string[]> = this.store.select(selectProjectOwners)
+
   statuses = Object.keys(statusOptions) as Status[];
   divisions:  Division[] = [ 'Accounting', 
   'Administration', 
@@ -92,7 +94,6 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
           })})
         }
 
-        //Set initial value for created and modified here.  skip default behavior.
         return ({ ...acc, [columnName]: new FormControl(controlValue) })},
       {}
     )
@@ -101,6 +102,12 @@ export class ProjectsGridComponent implements OnChanges, OnDestroy, ControlValue
   _selectedProject$ = new Subject<ProjectSummary>();
   selectedProject$ = this._selectedProject$.asObservable();
 
+  constructor(private store: Store){}
+
+  handleProjectUpdate(updatedProject: ProjectSummary) {
+    this.store.dispatch(DashboardPageActions.updateProject({title: updatedProject.title, changes: updatedProject}));
+  }
+  
   expandCollapse(project: ProjectSummary) {
     this.expandedProject = this.expandedProject === project ? null : project
     this.selectProject.emit(project);

@@ -1,40 +1,74 @@
-import { CommonModule } from '@angular/common';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { provideMockStore, MockStore } from '@ngrx/store/testing'
+import { render, screen } from '@testing-library/angular';
+import userEvent from '@testing-library/user-event';
+import { SharedMaterialModule } from '@r19/shared/material';
+
 import { ProjectEditComponent } from './project-edit.component';
+import { ProjectSummary } from '@r19/shared/models';
+import { ReactiveFormsModule } from '@angular/forms';
+
+const projectSummary = {
+  "title": "Dazzlesphere",
+  "division": "Accounting",
+  "project_owner": "Jimmie",
+  "budget": 21443.97,
+  "status": "archived",
+  "created": "07/20/2015",
+  "modified": "10/01/2015"
+}
 
 describe('ProjectEditComponent', () => {
-  let component: ProjectEditComponent;
-  let fixture: ComponentFixture<ProjectEditComponent>;
-  let mockStore: MockStore;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [CommonModule],
-      declarations: [ ProjectEditComponent ],
-      schemas: [NO_ERRORS_SCHEMA],
-      providers: [provideMockStore()]
+  it('should create', async () => {
+    const updateSpy = jest.fn();
+
+    await render(ProjectEditComponent , {
+      imports: [ReactiveFormsModule, SharedMaterialModule],
+        componentProperties: {
+          projectOwners: ['Buddy', 'Jimmie', 'Louie'],
+          currentProjectSummary: projectSummary as ProjectSummary,
+          projectUpdate: {
+              emit: updateSpy
+        } as any,
+      },
     })
-    .compileComponents();
-  });
+    // const status = screen.getByLabelText(/status/i);
+    // userEvent.selectOptions(status, 'archived')
+    
+    // const selectField = screen.queryByRole('combobox', { name: 'status'});
+    const selectField = screen.getByTestId('status-select');
+    userEvent.click(selectField);
+    const option = screen.getByText('archived')
+    userEvent.click(option);
+    // userEvent.selectOptions(selectField, 'archived')
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ProjectEditComponent);
-    component = fixture.componentInstance;
-    mockStore = TestBed.inject(MockStore);
-    mockStore.dispatch = jest.fn();
 
-    fixture.detectChanges();
-  });
+    const options = screen.queryAllByRole('options');
+    console.log('options', option.innerHTML)
+    // const pO = screen.getByLabelText(/project Owner/i);
+    // screen.getByText(/Jimmie/i)
+      // screen.getByText(/Archived/i)
+      // screen.getAllByText(/10/i)
+      // screen.getByText(/40/i)
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+      // const shirtSize = screen.getByLabelText(/Status/i);
+
+      // userEvent.click(status);
+      // userEvent.click(status);
+      // const t = screen.getByTestId('status-select')
+
+      // const t = screen.getByRole('combobox', {name: /Product Owner Jimmie/i})
+      // userEvent.click(t);
+
+
+
+        // an easier way to select options is to use the `selectOptions` event
+      // userEvent.selectOptions(shirtSize, inputValues.shwirtSize);
+      // userEvent.click(screen.getByText('Jimmie'));
+      //userEvent.click(screen.getByText('new'));
+    });
 
   it('should dispatch a "Update Project" action when the user selects a different Project Owner', () => {
-    expect(component).toBeTruthy();
+    // expect(component).toBeTruthy();
 
     // const expectedAction = BooksPageActions.selectBook({ bookId: mockBook.id });
     // const booksListComponent = fixture.debugElement.query(

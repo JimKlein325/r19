@@ -1,25 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { render, screen } from '@testing-library/angular';
+import { SharedMaterialModule } from '@r19/shared/material';
+import { StatusReport } from '@r19/shared/models';
 import { StatusSummaryComponent } from './status-summary.component';
 
+const status: StatusReport = {
+  archived: 10,
+  delivered: 10,
+  new: 10,
+  working: 10,
+  total: 40
+}
+
 describe('StatusSummaryComponent', () => {
-  let component: StatusSummaryComponent;
-  let fixture: ComponentFixture<StatusSummaryComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ StatusSummaryComponent ]
+  it('should create', async () => {
+    await render(StatusSummaryComponent , {
+      imports: [SharedMaterialModule],
+      componentProperties: {
+        summary: status
+      }
     })
-    .compileComponents();
-  });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(StatusSummaryComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    screen.getByText(/Status Summary/i)
+    screen.getByText(/Archived/i)
+    screen.getAllByText(/10/i)
+    screen.getByText(/40/i)
   });
 });

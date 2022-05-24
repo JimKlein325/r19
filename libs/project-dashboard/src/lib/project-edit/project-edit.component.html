@@ -1,8 +1,8 @@
 <form [formGroup]="form" class="edit-form">
         <mat-form-field appearance="outline" floatLabel="always">
-            <mat-label>Project Owner</mat-label>
-            <mat-select formControlName="project_owner">
-            <mat-option *ngFor="let projectOwner of projectOwners$ | async"  [value]="projectOwner">{{projectOwner}}</mat-option>
+            <mat-label for="po">Project Owner</mat-label>
+            <mat-select formControlName="project_owner" id="po">
+            <mat-option *ngFor="let projectOwner of projectOwners"  [value]="projectOwner">{{projectOwner}}</mat-option>
             </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" floatLabel="always">
@@ -12,7 +12,7 @@
           </mat-form-field>
         <mat-form-field appearance="outline" floatLabel="always">
             <mat-label>Status</mat-label>
-            <mat-select formControlName="status">
+            <mat-select formControlName="status" data-testid="status-select" name="status">
             <mat-option *ngFor="let status of statuses"  [value]="status">{{statusOptions[status]}}</mat-option>
             </mat-select>
         </mat-form-field>
